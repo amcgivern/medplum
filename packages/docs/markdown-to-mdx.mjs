@@ -3,9 +3,8 @@
 /* global console */
 /* global process */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
 function copyDir(sourceDir, targetDir) {
   const files = fs.readdirSync(sourceDir, { withFileTypes: true });
@@ -23,6 +22,7 @@ function copyDir(sourceDir, targetDir) {
 }
 
 function copyFile(sourceFile, targetFile) {
+  console.log(`Processing ${sourceFile} -> ${targetFile}`);
   if (sourceFile.endsWith('.md')) {
     fs.writeFileSync(targetFile.replace('.md', '.mdx'), escapeMdx(sourceFile, fs.readFileSync(sourceFile, 'utf8')));
   } else {
