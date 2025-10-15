@@ -22,7 +22,6 @@ function copyDir(sourceDir, targetDir) {
 }
 
 function copyFile(sourceFile, targetFile) {
-  console.log(`Processing ${sourceFile} -> ${targetFile}`);
   if (sourceFile.endsWith('.md')) {
     fs.writeFileSync(targetFile.replace('.md', '.mdx'), escapeMdx(sourceFile, fs.readFileSync(sourceFile, 'utf8')));
   } else {
