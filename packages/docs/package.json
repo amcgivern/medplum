@@ -17,7 +17,7 @@
     "build": "npm run copy-core-docs && docusaurus build",
     "clean": "docusaurus clear",
     "clear": "docusaurus clear",
-    "copy-core-docs": "rm -rf docs/sdk && node markdown-to-mdx.cjs ../core/dist/docs docs/sdk",
+    "copy-core-docs": "rm -rf docs/sdk && node markdown-to-mdx.mjs ../core/dist/docs docs/sdk",
     "deploy": "docusaurus deploy",
     "docusaurus": "docusaurus",
     "serve": "docusaurus serve",
