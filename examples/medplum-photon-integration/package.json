@@ -35,7 +35,7 @@
     "@medplum/react": "4.4.3",
     "@photonhealth/elements": "0.16.14",
     "@tabler/icons-react": "3.35.0",
-    "@types/node": "20.19.20",
+    "@types/node": "22.18.10",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.1",
     "@vitejs/plugin-react": "5.0.4",
