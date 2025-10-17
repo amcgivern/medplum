@@ -163,7 +163,7 @@ export function BotEditor(): JSX.Element | null {
           <CodeEditor
             iframeRef={codeFrameRef}
             language="typescript"
-            module="commonjs"
+            module="esnext"
             testId="code-frame"
             defaultValue={defaultCode}
             minHeight="528px"
