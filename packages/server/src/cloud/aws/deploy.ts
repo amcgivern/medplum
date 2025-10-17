@@ -17,7 +17,7 @@ import { sleep } from '@medplum/core';
 import type { Bot } from '@medplum/fhirtypes';
 import { ConfiguredRetryStrategy } from '@smithy/util-retry';
 import JSZip from 'jszip';
-import { extname } from 'node:path';
+import { getJsFileExtension } from '../../bots/utils';
 import { getConfig } from '../../config/loader';
 import { getLogger } from '../../logger';
 
@@ -165,25 +165,8 @@ export async function deployLambda(bot: Bot, code: string): Promise<void> {
 }
 
 async function createZipFile(bot: Bot, code: string): Promise<Uint8Array> {
-  // Need to determine if the bot code is CJS or ESM
-  // Rules:
-  // 1. If the code filename uses .cjs or .mjs, then that determines the module type
-  // 2. If the code exclusive uses `export` or `module.exports`, then that determines the module type
-  // 3. Default to CJS
-  const allowedExtensions = ['.js', '.cjs', '.mjs'];
-  let fileExtension = bot.executableCode?.title ? extname(bot.executableCode?.title) : undefined;
-  if (!fileExtension || !allowedExtensions.includes(fileExtension)) {
-    const codeContainsExport = /\bexport\b/.test(code);
-    const codeContainsModuleExports = /\bmodule\.exports\b/.test(code);
-    if (codeContainsExport && !codeContainsModuleExports) {
-      fileExtension = '.mjs';
-    } else {
-      fileExtension = '.cjs';
-    }
-  }
-
   const zip = new JSZip();
-  zip.file(`user${fileExtension}`, code);
+  zip.file(`user${getJsFileExtension(bot, code)}`, code);
   zip.file('index.mjs', WRAPPER_CODE);
   return zip.generateAsync({ type: 'uint8array' });
 }
